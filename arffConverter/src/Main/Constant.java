@@ -41,4 +41,6 @@ public class Constant {
     public static final String STOP_WORDS = Paths.get("").toAbsolutePath() + "/stopWords.json";
     public static final String STOP_WORDS_ENG = Paths.get("").toAbsolutePath() + "/stopWords_eng.json";
 
+    public final static String PI = "<?xml version=\"1.0\" encoding=\"utf-8\"?>";
+
 }

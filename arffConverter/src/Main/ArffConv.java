@@ -7,9 +7,14 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import org.w3c.dom.NamedNodeMap;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import weka.core.Instance;
 import weka.core.Instances;
 import weka.core.converters.ConverterUtils.DataSource;
 import weka.core.converters.XRFFSaver;
+import weka.core.xml.XMLInstances;
 
 import java.io.File;
 import java.io.IOException;
@@ -137,12 +142,76 @@ public class ArffConv extends Application {
 
             data.attribute(data.numAttributes() - 1).setWeight(0.9);
 
+            xrffFile = getNewFileWriter(mainTable.getArffFile().replace("arff", "xrff"));
+
             XRFFSaver saver = new XRFFSaver();
-            saver.setFile(new File(mainTable.getArffFile().replace("arff", "xrff")));
             saver.setInstances(data);
-            saver.writeBatch();
+            XMLInstances m_XMLInstances = new XMLInstances();
+            m_XMLInstances.setInstances(saver.getInstances());
+
+            String header;
+
+            header = PI + "\n\n";
+            if (m_XMLInstances.getDocType() != null)
+                header += m_XMLInstances.getDocType() + "\n\n";
+
+            writeXrff(header);
+
+            toString(m_XMLInstances.getDocument().getDocumentElement(), 0);
+
+            closeFileWriter(xrffFile);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    private static void toString(Node parent, int depth) throws IOException {
+        NodeList list;
+        Node node;
+        int i;
+        int n;
+        String indent;
+        NamedNodeMap atts;
+
+        // build indent
+        indent = "";
+        for (i = 0; i < depth; i++)
+            indent += "   ";
+
+        if (parent.getNodeType() == Node.TEXT_NODE) {
+            if (!parent.getNodeValue().trim().equals(""))
+                writeXrff(indent + parent.getNodeValue().trim() + "\n");
+        } else if (parent.getNodeType() == Node.COMMENT_NODE) {
+            writeXrff(indent + "<!--" + parent.getNodeValue() + "-->\n");
+        } else {
+            writeXrff(indent + "<" + parent.getNodeName());
+            // attributes?
+            if (parent.hasAttributes()) {
+                atts = parent.getAttributes();
+                for (n = 0; n < atts.getLength(); n++) {
+                    node = atts.item(n);
+                    writeXrff(" " + node.getNodeName() + "=\"" + node.getNodeValue() + "\"");
+                }
+            }
+            // children?
+            if (parent.hasChildNodes()) {
+                list = parent.getChildNodes();
+                // just a text node?
+                if ( (list.getLength() == 1) && (list.item(0).getNodeType() == Node.TEXT_NODE) ) {
+                    writeXrff(">");
+                    writeXrff(list.item(0).getNodeValue().trim());
+                    writeXrff("</" + parent.getNodeName() + ">\n");
+                } else {
+                    writeXrff(">\n");
+                    for (n = 0; n < list.getLength(); n++) {
+                        node = list.item(n);
+                        toString(node, depth + 1);
+                    }
+                    writeXrff(indent + "</" + parent.getNodeName() + ">\n");
+                }
+            } else {
+                writeXrff("/>\n");
+            }
         }
     }
 

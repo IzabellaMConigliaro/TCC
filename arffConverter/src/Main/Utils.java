@@ -17,7 +17,7 @@ import static Main.Constant.HEADER_ATTRIBUTE;
 public class Utils {
     private static List<String> stopWords;
     static FileWriter arffFile = null;
-
+    static FileWriter xrffFile = null;
 
     public static List<String> converterArray(String comment) {
         String[] array = comment.split(" \\b");
@@ -102,6 +102,11 @@ public class Utils {
     static void writeArff(String string) throws IOException {
         arffFile.write(string);
         arffFile.flush();
+    }
+
+    static void writeXrff(String string) throws IOException {
+        xrffFile.write(string);
+        xrffFile.flush();
     }
 
     static void closeFileWriter(FileWriter fileWriter) {
