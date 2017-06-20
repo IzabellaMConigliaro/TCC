@@ -27,7 +27,7 @@
    <children>
       <Pane focusTraversable="true" prefHeight="692.0" prefWidth="655.0" style="-fx-background-color: FFF;" GridPane.columnIndex="1">
          <children>
-            <GridPane layoutX="51.0" layoutY="37.0" prefHeight="53.0" prefWidth="507.0">
+            <GridPane layoutY="37.0" prefHeight="53.0" prefWidth="605.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
@@ -54,8 +54,11 @@
                   <RadioButton fx:id="db_felipe_melo" focusTraversable="false" text="Felipe Melo's Tweets" toggleGroup="$datasetGroup" wrapText="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                   <RadioButton fx:id="db_pang_lee" focusTraversable="false" text="Pang Lee's Movies Review" toggleGroup="$datasetGroup" wrapText="true" GridPane.columnIndex="2" GridPane.rowIndex="1" />
                </children>
+               <padding>
+                  <Insets left="40.0" right="40.0" />
+               </padding>
             </GridPane>
-            <GridPane layoutX="47.0" layoutY="141.0" prefHeight="45.0" prefWidth="516.0">
+            <GridPane layoutX="3.0" layoutY="141.0" prefHeight="45.0" prefWidth="605.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="225.0" minWidth="10.0" prefWidth="225.0" />
                   <ColumnConstraints fillWidth="false" hgrow="SOMETIMES" maxWidth="193.0" minWidth="10.0" prefWidth="175.0" />
@@ -66,10 +69,13 @@
                   <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                </rowConstraints>
                <children>
-                  <Label text="Select the attribute selection method:">
+                  <Label prefWidth="228.0" text="Select the attribute selection method:">
                      <padding>
                         <Insets bottom="20.0" />
                      </padding>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
                   </Label>
                   <RadioButton fx:id="method_none" disable="true" focusTraversable="false" mnemonicParsing="false" text="None" GridPane.columnIndex="2" GridPane.rowIndex="1">
                      <toggleGroup>
@@ -79,8 +85,11 @@
                   <RadioButton fx:id="method_single_occurrence" focusTraversable="false" mnemonicParsing="false" selected="true" text="Single Occurrence" toggleGroup="$methodGroup" GridPane.rowIndex="1" />
                   <RadioButton fx:id="method_dictionary_value" focusTraversable="false" mnemonicParsing="false" text="Dictionary Value" toggleGroup="$methodGroup" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                </children>
+               <padding>
+                  <Insets left="40.0" right="40.0" />
+               </padding>
             </GridPane>
-            <GridPane layoutX="62.0" layoutY="236.0">
+            <GridPane layoutY="236.0" prefHeight="192.0" prefWidth="605.0">
                <columnConstraints>
                   <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
                </columnConstraints>
@@ -110,35 +119,75 @@
                               <TextField fx:id="rows_limited" layoutX="61.0" layoutY="19.0" prefHeight="25.0" prefWidth="75.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane GridPane.columnIndex="1">
+                        <AnchorPane disable="true" GridPane.columnIndex="1">
                            <children>
-                              <CheckBox focusTraversable="false" layoutX="102.0" layoutY="6.0" mnemonicParsing="false" text="Minimun Occurrence" />
+                              <CheckBox focusTraversable="false" layoutX="97.0" layoutY="6.0" mnemonicParsing="false" text="Minimun Occurrence" />
                               <TextField layoutX="168.0" layoutY="26.0" prefHeight="27.0" prefWidth="75.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane prefHeight="66.0" prefWidth="263.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                        <AnchorPane disable="true" prefHeight="66.0" prefWidth="263.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                            <children>
-                              <CheckBox focusTraversable="false" layoutX="98.0" layoutY="6.0" mnemonicParsing="false" text="Maximum Occurrence" />
+                              <CheckBox disable="true" focusTraversable="false" layoutX="98.0" layoutY="6.0" mnemonicParsing="false" text="Maximum Occurrence" />
                               <TextField layoutX="167.0" layoutY="25.0" prefHeight="27.0" prefWidth="75.0" />
                            </children>
                         </AnchorPane>
-                        <AnchorPane GridPane.rowIndex="1">
+                        <AnchorPane disable="true" GridPane.rowIndex="1">
                            <children>
-                              <CheckBox focusTraversable="false" mnemonicParsing="false" text="New Attribute Weight" />
+                              <CheckBox disable="true" focusTraversable="false" mnemonicParsing="false" text="New Attribute Weight" />
                               <TextField layoutX="63.0" layoutY="23.0" prefHeight="27.0" prefWidth="75.0" />
                            </children>
                         </AnchorPane>
                      </children>
                   </GridPane>
                </children>
+               <padding>
+                  <Insets left="40.0" right="40.0" />
+               </padding>
             </GridPane>
-            <Button defaultButton="true" focusTraversable="false" layoutX="194.0" layoutY="461.0" mnemonicParsing="false" onAction="#startConversion" prefHeight="27.0" prefWidth="217.0" text="Start Conversion" />
-            <ProgressBar fx:id="progress_bar" layoutX="47.0" layoutY="626.0" prefHeight="18.0" prefWidth="516.0" progress="0.0" />
-            <Separator layoutX="47.0" layoutY="436.0" prefHeight="3.0" prefWidth="516.0" />
-            <TextArea fx:id="text_area" editable="false" focusTraversable="false" layoutX="46.0" layoutY="511.0" prefHeight="102.0" prefWidth="516.0" />
+            <GridPane layoutY="461.0" prefHeight="201.0" prefWidth="605.0">
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+               </columnConstraints>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <children>
+                  <Button alignment="CENTER" contentDisplay="TOP" defaultButton="true" focusTraversable="false" mnemonicParsing="false" onAction="#startConversion" prefHeight="27.0" prefWidth="217.0" text="Start Conversion" textAlignment="CENTER" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+                     <opaqueInsets>
+                        <Insets bottom="20.0" />
+                     </opaqueInsets>
+                  </Button>
+                  <ProgressBar fx:id="progress_bar" prefHeight="18.0" prefWidth="519.0" progress="0.0" GridPane.halignment="CENTER" GridPane.hgrow="SOMETIMES" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
+                  <TextArea fx:id="text_area" editable="false" focusTraversable="false" prefHeight="94.0" prefWidth="449.0" GridPane.rowIndex="1">
+                     <opaqueInsets>
+                        <Insets bottom="20.0" top="20.0" />
+                     </opaqueInsets>
+                     <GridPane.margin>
+                        <Insets />
+                     </GridPane.margin>
+                  </TextArea>
+               </children>
+               <padding>
+                  <Insets left="20.0" right="20.0" />
+               </padding>
+            </GridPane>
+            <Separator layoutX="7.0" layoutY="436.0" prefHeight="3.0" prefWidth="593.0">
+               <padding>
+                  <Insets left="20.0" right="20.0" />
+               </padding></Separator>
             <TextField layoutX="62.0" layoutY="379.0" visible="false" />
-            <Separator layoutX="47.0" layoutY="219.0" prefHeight="3.0" prefWidth="516.0" />
-            <Separator layoutX="46.0" layoutY="121.0" prefHeight="3.0" prefWidth="516.0" />
+            <Separator layoutX="7.0" layoutY="218.0" prefHeight="3.0" prefWidth="593.0">
+               <padding>
+                  <Insets left="20.0" right="20.0" />
+               </padding>
+            </Separator>
+            <Separator layoutX="7.0" layoutY="121.0" prefHeight="3.0" prefWidth="593.0">
+               <padding>
+                  <Insets left="20.0" right="20.0" />
+               </padding>
+            </Separator>
          </children>
          <opaqueInsets>
             <Insets />
