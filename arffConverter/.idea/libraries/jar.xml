@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="jar">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/out/production/arffConverter/jar/commons-lang3-3.4.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/production/arffConverter/jar/pentaho.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/production/arffConverter/jar/com.mysql.jdbc_5.1.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/production/arffConverter/jar/gson-2.8.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/out/production/arffConverter/jar/weka-dev-3.7.10.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import static Main.Constant.*;
+import static Main.PorterStemmer.getStemmer;
 import static Main.Utils.*;
 import static Model.DBTable.initTable;
 import static Model.SelectionMethod.NO_DATA;
@@ -123,7 +124,7 @@ public class ArffConv extends Application {
             controller.setTextArea("Finish!");
 
             closeFileWriter(arffFile);
-            convertXrff();
+            //convertXrff();
         }
     }
 
@@ -168,51 +169,60 @@ public class ArffConv extends Application {
     private static void toString(Node parent, int depth) throws IOException {
         NodeList list;
         Node node;
-        int i;
         int n;
-        String indent;
         NamedNodeMap atts;
 
-        // build indent
-        indent = "";
-        for (i = 0; i < depth; i++)
-            indent += "   ";
+        String indent = getIndent(depth);
 
-        if (parent.getNodeType() == Node.TEXT_NODE) {
-            if (!parent.getNodeValue().trim().equals(""))
-                writeXrff(indent + parent.getNodeValue().trim() + "\n");
-        } else if (parent.getNodeType() == Node.COMMENT_NODE) {
-            writeXrff(indent + "<!--" + parent.getNodeValue() + "-->\n");
-        } else {
-            writeXrff(indent + "<" + parent.getNodeName());
-            // attributes?
-            if (parent.hasAttributes()) {
-                atts = parent.getAttributes();
-                for (n = 0; n < atts.getLength(); n++) {
-                    node = atts.item(n);
-                    writeXrff(" " + node.getNodeName() + "=\"" + node.getNodeValue() + "\"");
+        switch (parent.getNodeType()) {
+            case Node.TEXT_NODE:
+                if (!parent.getNodeValue().trim().equals("")) {
+                    writeXrff(indent + parent.getNodeValue().trim() + "\n");
                 }
-            }
-            // children?
-            if (parent.hasChildNodes()) {
-                list = parent.getChildNodes();
-                // just a text node?
-                if ( (list.getLength() == 1) && (list.item(0).getNodeType() == Node.TEXT_NODE) ) {
-                    writeXrff(">");
-                    writeXrff(list.item(0).getNodeValue().trim());
-                    writeXrff("</" + parent.getNodeName() + ">\n");
-                } else {
-                    writeXrff(">\n");
-                    for (n = 0; n < list.getLength(); n++) {
-                        node = list.item(n);
-                        toString(node, depth + 1);
+                break;
+            case Node.COMMENT_NODE:
+                writeXrff(indent + "<!--" + parent.getNodeValue() + "-->\n");
+                break;
+            default:
+                writeXrff(indent + "<" + parent.getNodeName());
+                // attributes?
+                if (parent.hasAttributes()) {
+                    atts = parent.getAttributes();
+                    for (n = 0; n < atts.getLength(); n++) {
+                        node = atts.item(n);
+                        writeXrff(" " + node.getNodeName() + "=\"" + node.getNodeValue() + "\"");
                     }
-                    writeXrff(indent + "</" + parent.getNodeName() + ">\n");
                 }
-            } else {
-                writeXrff("/>\n");
-            }
+                // children?
+                if (parent.hasChildNodes()) {
+                    list = parent.getChildNodes();
+                    // just a text node?
+                    if ((list.getLength() == 1) && (list.item(0).getNodeType() == Node.TEXT_NODE)) {
+                        writeXrff(">");
+                        writeXrff(list.item(0).getNodeValue().trim());
+                        writeXrff("</" + parent.getNodeName() + ">\n");
+                    } else {
+                        writeXrff(">\n");
+                        for (n = 0; n < list.getLength(); n++) {
+                            node = list.item(n);
+                            toString(node, depth + 1);
+                        }
+                        writeXrff(indent + "</" + parent.getNodeName() + ">\n");
+                    }
+                } else {
+                    writeXrff("/>\n");
+                }
         }
+    }
+
+    private static String getIndent(int depth) {
+        String indent = "";
+
+        for (int i = 0; i < depth; i++) {
+            indent += "   ";
+        }
+
+        return indent;
     }
 
     private static void setAttributeVariables() {
@@ -253,8 +263,12 @@ public class ArffConv extends Application {
             commentList.add(comment);
 
             for (String word : comment.getWords()) {
-                if (word.trim().length() > 1 && !attributeMap.containsKey(word.trim())) {
-                    attributeMap.put(word.trim(), new Attribute(word));
+                String finalWord = word;
+                if (true) {
+                    finalWord = getStemmer().stem(word);
+                }
+                if (finalWord.length() > 1 && !attributeMap.containsKey(finalWord.trim())) {
+                    attributeMap.put(finalWord.trim(), new Attribute(finalWord));
                 }
             }
         }

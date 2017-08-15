@@ -2,6 +2,7 @@ package Main;
 
 import Model.DBTable;
 import Model.SelectionMethod;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -69,7 +70,11 @@ public class Controller implements javafx.fxml.Initializable {
     }
 
     public void setTextArea(String progress) {
-        text_area.setText(text_area.getText() + "\n" + progress);
+        Platform.runLater(
+                () -> {
+                    text_area.setText(text_area.getText() + "\n" + progress);
+                }
+        );
     }
 
     @Override
